@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\{User, Category};
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
  */
@@ -16,19 +17,16 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $name = Str::random(10);
-        $price = number_format(rand(1, 10000) / 100, 2);
-        $slug = Str::slug($name, '-');
-        $image = 'https://via.placeholder.com/350x150';
+        $name =  $this->faker->unique()->sentence();
 
         return [
             'name' => $name,
-            'description' => $this->faker->text(),
-            'price' => number_format(rand(1, 10000) / 100, 2),
-            'slug' => $slug,
-            'user_id' => 1,
-            'category_id' => 1,
-            'image' => 'https://via.placeholder.com/350x150'
+            'description' => $this->faker->paragraph(),
+            'price' => $this->faker->randomNumber(2),
+            'slug' => Str::slug($name),
+            'image' => $this->faker->imageUrl(400, 400),
+            'user_id' => User::pluck('id')->random(),
+            'category_id' => Category::pluck('id')->random(),
         ];
     }
 }
