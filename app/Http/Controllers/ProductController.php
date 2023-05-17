@@ -12,7 +12,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $nome = 'bianca';
+        return view('web.home',compact('nome'));
     }
 
     /**
